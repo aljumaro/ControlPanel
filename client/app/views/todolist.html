@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col-xs-12">
+	  <div class="box box-info">
+	    <div class="box-header">
+	      <h3 class="box-title"></h3>
+	      <div class="box-tools pull-right">
+		    <button type="submit" class="btn btn-info btn-sm" ng-click="toggleFilter()"><i class="fa fa-filter"></i> Filter</button>
+		    <a class="btn btn-success btn-sm" href="#/todo/add"><i class="fa fa-plus"></i> Add</a>
+		  </div>
+	    </div><!-- /.box-header -->
+	    <div class="box-body table-responsive no-padding">
+	      <table class="table table-hover">
+	        <tr>
+	          <th class="col-xs-2">Title</th>
+	          <th class="col-xs-2">Project</th>
+	          <th class="col-xs-2">Priority</th>
+	          <th class="col-xs-2">Status</th>
+	          <th class="col-xs-2">Date</th>
+	          <th class="col-xs-2"></th>
+	        </tr>
+	        <tr ng-if="showFilter">
+	        	<td>
+	        		<input type="text" class="form-control"/>
+	        	</td>
+	          <td>
+	          	<select class="form-control">
+                  	<option></option>
+                    <option>General</option>
+                    <option>ARQFIS - Web</option>
+                    <option>ARQFIS - ETL - RUJ</option>
+                    <option>ARQFIS - ETL - Expurgo</option>
+                    <option>ARQFIS - ETL - Migración</option>
+                  </select>
+	          </td>
+	          <td>
+	          	<select class="form-control">
+                    <option></option>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                    <option>ASAP</option>
+                  </select>
+	          </td>
+	          <td>
+	          	<select class="form-control">
+	                <option></option>
+	                <option value="{{st.code}}" ng-repeat="st in todoStatus">
+	                	{{st.description}} 
+	                </option>
+	              </select>
+	          </td>
+	          <td>
+	          	<div class="input-group">
+	                  <div class="input-group-addon">
+	                    <i class="fa fa-calendar"></i>
+	                  </div>
+	                  <input type="text" class="form-control pull-right" id="reservation">
+	                </div>
+	          </td>
+	          <td></td>
+	        </tr>
+	        <tr ng-repeat="todo in todoList">
+	          <td>{{todo.title}}</td>
+	          <td>{{todo.project}}</td>
+	          <td>{{todo.priority | priorityFilter}}</td>
+	          <td>{{todo.status | statusFilter}}</span></td>
+	          <td>{{todo.date | date: 'dd-MM-yyyy'}}</td>
+	          <td>
+	          	<div class="pull-right">
+              		<button type="submit" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> Edit</button>
+              		<button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>              		               		
+              	</div>
+	          </td>
+	        </tr>
+	      </table>
+	    </div>
+	  </div><!-- /.box -->
+	</div>
+</div>
