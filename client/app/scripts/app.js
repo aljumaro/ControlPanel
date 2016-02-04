@@ -1,5 +1,10 @@
 'use strict';
 
+var underscore = angular.module('underscore', []);
+underscore.factory('_', function() {
+  return window._; // assumes underscore has already been loaded on the page
+});
+
 /**
  * @ngdoc overview
  * @name toDoApp
@@ -15,9 +20,11 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'underscore',
+    'ui.bootstrap'
   ])
-  .config(function ($routeProvider) {
+  .config(function($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/dashboard.html',

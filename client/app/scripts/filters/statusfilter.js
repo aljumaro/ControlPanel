@@ -9,15 +9,12 @@
  * Filter in the toDoApp.
  */
 angular.module('toDoApp')
-	.filter('statusFilter', ['TODO_STATUS', function(todoStatus) {
+	.filter('statusFilter', ['TODO_STATUS', '_', function(todoStatus, _) {
 		return function(input) {
 
-			for (var i = 0; i < todoStatus.length; i++) {
-				if (todoStatus[i].code === input) {
-					return todoStatus[i].description;
-				}
-			}
+			return _.find(todoStatus, function(status) {
+				return status.code === input;
+			}).description;
 
-			return 'Unknown';
 		};
 	}]);

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var TodoModel = require('./schemas/todo');
 
 // Connections
-var developmentDb = 'mongodb://controlpanel:*****@ds055555.mongolab.com:55555/controlpanel';
+var developmentDb = 'mongodb://controlpanel:******@ds055555.mongolab.com:55555/controlpanel';
 var productionDb = 'urlToYourProductionMongoDb';
 var usedDb;
 

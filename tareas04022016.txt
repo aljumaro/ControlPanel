@@ -1,0 +1,9 @@
+* Integrar la modal de creación
+* Crear una factoria de maestros que, de momento tire de las constantes
+* Cambiar la manera de generar los select por los que se suponen buenos. Hacer que estos select sean de selección múltiple, ver como se comportan con angular y los filtros.
+* Integrar el componente de fechas
+* Finalizar el filtro
+* Editar una tarea
+* Eliminar una tarea
+* Gestionar proyectos a través de la BD
+* Probar a recuperar las listas de maestros del todocontroller desde el controler de la modal
