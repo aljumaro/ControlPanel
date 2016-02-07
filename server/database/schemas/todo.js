@@ -10,6 +10,7 @@ var todoSchema = new Schema({
     priority: { type: String},
     project: { type: String},
     status: { type: String},
+    url: {type: String}
 });
 
 var Todo = mongoose.model('Todo', todoSchema);

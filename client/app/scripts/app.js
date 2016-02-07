@@ -36,16 +36,6 @@ angular
         controller: 'TodosCtrl',
         controllerAs: 'todos'
       })
-      .when('/todo/detail/:idTodo', {
-        templateUrl: 'views/tododetail.html',
-        controller: 'TodoDetailCtrl',
-        controllerAs: 'todo/detail'
-      })
-      .when('/todo/add', {
-        templateUrl: 'views/tododetail.html',
-        controller: 'TodoDetailCtrl',
-        controllerAs: 'todo/detail'
-      })
       .when('/deployments', {
         templateUrl: 'views/deployments.html',
         controller: 'DeploymentsCtrl',

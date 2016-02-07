@@ -4,12 +4,11 @@ var moment = require('moment');
 var _ = require('underscore');
 var color = require('cli-color');
 var db = require('../../database');
-var Todos = db.todos;
+var sanitize = require('mongo-sanitize');
+var Todo = db.Todo;
 
 // POST /todo
 router.post('/', function(req, res) {
-
-	console.log('entrando');
 	// The posted information from the front-end
 	var body = req.body;
 	// Current time this occurred
@@ -17,7 +16,7 @@ router.post('/', function(req, res) {
 
 	console.log('schema');
 	// setup the new user
-	var newTodo = new Todos({
+	var newTodo = new Todo({
 		
 		title: body.title,
 		detail: body.detail,
@@ -29,14 +28,12 @@ router.post('/', function(req, res) {
 		status: body.status
 	});
 
-	console.log('save');
 	// save the user to the database
 	newTodo.save(function(err, newTodo, numberAffected) {
-		console.log('comprobando si hay err');
 		if (err) {
 			console.log('Problem saving the todo ' + color.yellow(body.title) + ' due to ' + err);
 			res.status(500).json({
-				'message': 'Database error trying to sign up.  Please contact aljumaro@gmail.com.'
+				'message': 'Database error trying to create Todo.  Please contact aljumaro@gmail.com.'
 			});
 		}
 	});
@@ -54,14 +51,84 @@ router.post('/', function(req, res) {
 
 // GET /signup/info
 router.get('/', function(req, res) {
-	Todos.find({}, function (err, docs) {
+	Todo.find({}, function (err, docs) {
         res.json(docs);
     });
 });
 
-router.put('/', function(req, res) {
+router.get('/prueba', function(req, res) {
+	var newTodo = new Todo({
+		
+		title: 'http://www.google.es',
+		detail: 'http://www.google.es',
+		url: 'http://www.google.es',
+		date: new Date(),
+		dateCompleted: new Date(),
+		priority: 'http://www.google.es',
+		project: 'http://www.google.es',
+		status: 'http://www.google.es'
+	});
+
+	console.log(newTodo);
+
+	// save the user to the database
+	newTodo.save(function(err, newTodo, numberAffected) {
+		if (err) {
+			console.log('Problem saving the todo ' + color.yellow(body.title) + ' due to ' + err);
+			res.status(500).json({
+				'message': 'Database error trying to create Todo.  Please contact aljumaro@gmail.com.'
+			});
+		}
+	});
+});
+
+router.put('/:todo_id', function(req, res) {
 	var body = req.body;
-	res.json({'msg': 'PUT para el todo ' + body.title});
+
+	var query = {'_id': req.params.todo_id};
+
+	var cleanURL = sanitize(body.url);
+
+	console.log('La URL ' + color.red(body.url) + ' ahora es ' + color.green(cleanURL));
+
+	Todo.findOneAndUpdate(query, body, function(err, todo){
+		if (err) {
+			console.log('Problem saving the todo ' + color.yellow(body.title) + ' due to ' + err);
+			res.status(500).json({
+				'message': 'Database error trying to create Todo.  Please contact aljumaro@gmail.com.'
+			});
+		}
+
+		console.log('El todo modificado es ' + JSON.stringify(todo));
+
+		res.status(200).json({
+			'message': 'Successfully modified todo ' + body.title
+		});
+	});
+
+
+});
+
+router.delete('/:todo_id', function(req, res) {
+
+	var cleanId = sanitize(req.params.todo_id);
+
+	console.log(color.red(req.params.todo_id) + ' ahora es ' + color.green(cleanId));
+
+	Todo.remove({
+		_id: req.params.todo_id
+	}, function(err, todo){
+		if (err) {
+			res.status(500).json({
+				'message': 'Database error trying to delete ' + req.params.todo_id
+			});
+		}
+
+		res.status(200).json({
+			'message': 'Successfully deleted todo' + todo.title
+		});
+
+	});
 });
 
 // etc...

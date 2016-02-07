@@ -8,16 +8,15 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-	.controller('TodosCtrl', ['$scope', 'toDoFactory', 'TODO_STATUS', '$uibModal', 'TODO_PRIORITY', 'TODO_PROJECT', '$rootScope',
-		function($scope, toDoFactory, todoStatus, $uibModal, todoPriority, todoProject, $ro) {
+	.controller('TodosCtrl', ['$scope', 'toDoFactory', '$uibModal', 'Maestros',
+		function($scope, toDoFactory, $uibModal, Maestros) {
 
 		function init() {
-			$scope.statusList = todoStatus;
+			$scope.statusList = Maestros.status;
+			$scope.priorityList = Maestros.priorities;
+			$scope.projectList = Maestros.projects;
 			$scope.showFilter = false;
-			$scope.priorityList = todoPriority;
-			$scope.projectList = todoProject;
 			loadTodos();
-			
 		}	
 
 		function loadTodos() {
@@ -31,9 +30,10 @@ angular.module('toDoApp')
 		      animation: false,
 		      templateUrl: 'editTodo.html',
 		      controller: 'EditTodoCtrl',
+		      scope: $scope,
 		      resolve: {
 		        todo: function () {
-		          return todo;
+		          return angular.copy(todo);
 		        }
 		      }
 		    });
@@ -55,17 +55,23 @@ angular.module('toDoApp')
 			openModal(todo);
 		};
 
+		$scope.remove = function(_id){
+			toDoFactory.remove(_id).then(loadTodos());
+		}
+
 		init();
 
 	}])
-	.controller('EditTodoCtrl', ['$scope', '$uibModalInstance', 'todo', 'TODO_STATUS', 'TODO_PRIORITY', 'TODO_PROJECT',
+	.controller('EditTodoCtrl', ['$scope', '$uibModalInstance', 'todo',
 		function($scope, $uibModalInstance, todo, todoStatus, todoPriority, todoProject){
+
+		if(!todo._id) {
+			todo.priority = 'MD';
+			todo.status = 'OP';
+		}
 
 		$scope.modalTitle = (todo.title) ? 'Edit ' + todo.title : 'New To Do';
 		$scope.todo = todo;
-		$scope.statusList = todoStatus;
-		$scope.priorityList = todoPriority;
-		$scope.projectList = todoProject;
 
 		$scope.ok = function() {
 			$uibModalInstance.close(todo);

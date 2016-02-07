@@ -18,14 +18,16 @@ angular.module('toDoApp').factory('toDoFactory', ['$http', function($http) {
 
     	//Si el todo ya tiene id lo editamos con PUT
     	if (todo._id) {
-			return $http.put('/api/todo', todo);
+			return $http.put('/api/todo/' + todo._id, todo);
     	} 
     	
     	//Si no tiene id lo guardamos con post
     	todo.date = new Date();
     	return $http.post('/api/todo', todo);
-    	
+    },
 
+    remove: function(_id){
+        return $http.delete('api/todo/' + _id);
     }
   };
 }]);

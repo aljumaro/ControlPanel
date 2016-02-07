@@ -32,4 +32,4 @@ db.once('open', function callback () {
   console.log('Database Connection Successfully Opened at ' + usedDb);
 });
 
-exports.todos = TodoModel;
+exports.Todo = TodoModel;
