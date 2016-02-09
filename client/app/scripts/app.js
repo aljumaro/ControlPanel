@@ -24,7 +24,7 @@ angular
     'underscore',
     'ui.bootstrap'
   ])
-  .config(function($routeProvider) {
+  .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/dashboard.html',
@@ -34,7 +34,12 @@ angular
       .when('/todo', {
         templateUrl: 'views/todolist.html',
         controller: 'TodosCtrl',
-        controllerAs: 'todos'
+        controllerAs: 'todos',
+        resolve: {
+          todosResolve: ['toDoFactory', function(toDoFactory){
+            return toDoFactory.find();
+          }]
+        }
       })
       .when('/deployments', {
         templateUrl: 'views/deployments.html',
@@ -59,4 +64,14 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+
+   /* $httpProvider.interceptors.push(function($timeout) {
+      return {
+        "response": function(response) {
+          return $timeout(function() {
+            return response;
+          }, 2500);
+        }
+      };
+    });*/
+  }]);

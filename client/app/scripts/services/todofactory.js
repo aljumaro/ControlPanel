@@ -11,7 +11,7 @@ angular.module('toDoApp').factory('toDoFactory', ['$http', function($http) {
 
   return {
     find: function() {
-      return $http.get('/api/todo');
+        return $http.get('/api/todo');
     },
 
     save: function(todo) {

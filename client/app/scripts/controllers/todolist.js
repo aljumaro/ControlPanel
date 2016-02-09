@@ -8,15 +8,16 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-	.controller('TodosCtrl', ['$scope', 'toDoFactory', '$uibModal', 'Maestros',
-		function($scope, toDoFactory, $uibModal, Maestros) {
+	.controller('TodosCtrl', ['$scope', 'toDoFactory', '$uibModal', 'Maestros', 'todosResolve',
+		function($scope, toDoFactory, $uibModal, Maestros, todosResolve) {
 
 		function init() {
 			$scope.statusList = Maestros.status;
 			$scope.priorityList = Maestros.priorities;
 			$scope.projectList = Maestros.projects;
 			$scope.showFilter = false;
-			loadTodos();
+
+			$scope.todoList = todosResolve.data;
 		}	
 
 		function loadTodos() {

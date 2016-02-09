@@ -245,7 +245,9 @@
         <!-- Main content -->
         <section class="content">
 
-          <div ng-view=""></div>
+          <route-loading-indicator></route-loading-indicator>
+
+          <div ng-hide="isRouteLoading" ng-view=""></div>
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
@@ -365,9 +367,9 @@
         <script src="scripts/filters/statusfilter.js"></script>
         <script src="scripts/filters/priorityfilter.js"></script>
         <script src="scripts/filters/projectfilter.js"></script>
-        <script src="scripts/controllers/tododetail.js"></script>
         <script src="scripts/controllers/todolist.js"></script>
         <script src="scripts/services/maestros.js"></script>
+        <script src="scripts/directives/routeloadingindicator.js"></script>
         <!-- endbuild -->
 </body>
 </html>
