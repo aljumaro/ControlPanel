@@ -8,8 +8,10 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-	.controller('TodosCtrl', ['$scope', 'toDoFactory', '$uibModal', 'Maestros', 'todosResolve',
-		function($scope, toDoFactory, $uibModal, Maestros, todosResolve) {
+	.controller('TodosCtrl', ['$scope', 'toDoFactory', '$uibModal', 'Maestros', 'todosResolve', '$timeout',
+		function($scope, toDoFactory, $uibModal, Maestros, todosResolve, $timeout) {
+
+		$scope.loading = false;
 
 		function init() {
 			$scope.statusList = Maestros.status;
@@ -21,8 +23,17 @@ angular.module('toDoApp')
 		}	
 
 		function loadTodos() {
+			$scope.loading = true;
 			toDoFactory.find().then(function(response) {
+				console.log('finding');
+				for (var i = 0; i < response.data.length; i++) {
+					console.log(response.data[i]);
+				}
 				$scope.todoList = response.data;
+				$scope.loading = false;
+			}, function(error){
+				console.log(error);
+				$scope.loading = false;
 			});	
 		}
 
@@ -40,7 +51,12 @@ angular.module('toDoApp')
 		    });
 
 		    modal.result.then(function(todo){
-		    	toDoFactory.save(todo).then(loadTodos());
+		    	console.log('saving: ');
+		    	console.log(todo);
+		    	toDoFactory.save(todo).then(function(){
+		    		//FIXME: Problema de carga recupera antes la lista con el elemento viejo
+		    		$timeout(loadTodos(), 100);
+		    	});
 		    });
 		}
 
@@ -58,13 +74,13 @@ angular.module('toDoApp')
 
 		$scope.remove = function(_id){
 			toDoFactory.remove(_id).then(loadTodos());
-		}
+		};
 
 		init();
 
 	}])
 	.controller('EditTodoCtrl', ['$scope', '$uibModalInstance', 'todo',
-		function($scope, $uibModalInstance, todo, todoStatus, todoPriority, todoProject){
+		function($scope, $uibModalInstance, todo){
 
 		if(!todo._id) {
 			todo.priority = 'MD';

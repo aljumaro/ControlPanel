@@ -7,11 +7,11 @@
  * # RouteLoadingIndicator
  */
 angular.module('toDoApp')
-  .directive('routeLoadingIndicator', ['$rootScope', function ($rootScope) {
+  .directive('routeLoadingIndicator', [function () {
     return {
-      template: "<h1 ng-if='isRouteLoading'>Loading...<i class='fa fa-circle-o-notch fa-spin'></i></h1>",
+      template: '<h1 ng-if=\'isRouteLoading\'>Loading...<i class=\'fa fa-circle-o-notch fa-spin\'></i></h1>',
       restrict: 'E',
-      link: function(scope, elem, attrs) {
+      link: function(scope) {
 	      scope.isRouteLoading = false;
 	 
 	      scope.$on('$routeChangeStart', function() {

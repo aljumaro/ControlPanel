@@ -24,7 +24,7 @@ angular
     'underscore',
     'ui.bootstrap'
   ])
-  .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+  .config(['$routeProvider', function($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/dashboard.html',
