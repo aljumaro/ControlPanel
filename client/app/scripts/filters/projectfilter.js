@@ -12,8 +12,10 @@ angular.module('toDoApp')
 	.filter('projectfilter', ['TODO_PROJECT', '_', function(todoProject, _) {
 		return function(input) {
 			
-			return _.find(todoProject, function(project) {
+			var project = _.find(todoProject, function(project) {
 				return project.code === input;
-			}).description;
+			});
+
+			return project !== undefined ? project.description : '';
 		};
 	}]);

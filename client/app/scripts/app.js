@@ -22,9 +22,11 @@ angular
     'ngSanitize',
     'ngTouch',
     'underscore',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angular-confirm',
+    'ui-notification'
   ])
-  .config(['$routeProvider', function($routeProvider) {
+  .config(['$routeProvider', 'NotificationProvider', function($routeProvider, NotificationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/dashboard.html',
@@ -65,6 +67,15 @@ angular
         redirectTo: '/'
       });
 
+    NotificationProvider.setOptions({
+            startTop: 20,
+            startRight: 20,
+            verticalSpacing: 20,
+            horizontalSpacing: 20,
+            positionY: 'bottom',
+            templateUrl : 'views/templates/notification.html'
+        });
+
    /* $httpProvider.interceptors.push(function($timeout) {
       return {
         "response": function(response) {
@@ -74,4 +85,9 @@ angular
         }
       };
     });*/
-  }]);
+  }]).run(function($confirmModalDefaults){
+    $confirmModalDefaults.templateUrl = 'views/templates/confirm.html';
+    $confirmModalDefaults.title = 'Confirm action';
+    $confirmModalDefaults.ok = 'Continue';
+    $confirmModalDefaults.cancel = 'Cancel';
+  });

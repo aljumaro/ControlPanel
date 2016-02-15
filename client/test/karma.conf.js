@@ -33,6 +33,8 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/underscore/underscore.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'bower_components/angular-confirm-modal/angular-confirm.min.js',
+      'bower_components/angular-ui-notification/dist/angular-ui-notification.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
