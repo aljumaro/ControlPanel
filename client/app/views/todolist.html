@@ -12,12 +12,12 @@
 	      <table class="table table-hover">
 	        <tr>
 	          <th class="col-xs-3">Title</th>
-	          <th class="col-xs-3">Project</th>
-	          <th class="col-xs-1">Priority</th>
+	          <th class="col-xs-2">Project</th>
+	          <th class="col-xs-2">Priority</th>
 	          <th class="col-xs-1">Status</th>
 	          <th class="col-xs-1">Date</th>
 	          <th class="col-xs-1">URL</th>
-	          <th class="col-xs-2"></th>
+	          <th class="col-xs-1"></th>
 	        </tr>
 	        <tr ng-show="showFilter">
 				<td>
@@ -46,7 +46,7 @@
 						<div class="input-group-addon">
 						<i class="fa fa-calendar"></i>
 					</div>
-					<input type="text" class="form-control pull-right" id="reservation">
+					<input type="text" class="form-control pull-right" ng-model="todoFilter.daterange" date-range-picker>
 					</div>
 				</td>
 				<td>

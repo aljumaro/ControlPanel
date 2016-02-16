@@ -24,7 +24,9 @@ angular
     'underscore',
     'ui.bootstrap',
     'angular-confirm',
-    'ui-notification'
+    'ui-notification',
+    'daterangepicker',
+    'angularMoment'
   ])
   .config(['$routeProvider', 'NotificationProvider', function($routeProvider, NotificationProvider) {
     $routeProvider
@@ -73,7 +75,8 @@ angular
             verticalSpacing: 20,
             horizontalSpacing: 20,
             positionY: 'bottom',
-            templateUrl : 'views/templates/notification.html'
+            templateUrl : 'views/templates/notification.html',
+            delay: 30000
         });
 
    /* $httpProvider.interceptors.push(function($timeout) {

@@ -1,12 +1,19 @@
 'use strict';
 
-function filterFunction(todo, filter) {
+function filterFunction(todo, filter, moment) {
+	var baseDate = moment(todo.date);
+	var startDate = filter.daterange.startDate;
+	var endDate = filter.daterange.endDate;
 	return (
-		(filter.title === undefined || 
+		(filter.title === undefined ||
 			todo.title.toUpperCase().indexOf(filter.title.toUpperCase()) > -1) &&
 		(filter.url === undefined || filter.url === '' ||
-			(todo.url !== undefined && todo.url.toUpperCase().indexOf(filter.url.toUpperCase()) > -1))
-		);
+			(todo.url !== undefined && todo.url.toUpperCase().indexOf(filter.url.toUpperCase()) > -1)) &&
+		(filter.priority === undefined || filter.priority === null || todo.priority === filter.priority) &&
+		(filter.project === undefined || filter.project === null || todo.project === filter.project) &&
+		(filter.status === undefined || filter.status === null || todo.status === filter.status) &&
+		((startDate === null && endDate === null) || baseDate.isBetween(startDate, endDate))
+	);
 }
 
 /**
@@ -17,8 +24,8 @@ function filterFunction(todo, filter) {
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-	.controller('TodosCtrl', ['$scope', 'toDoFactory', '$uibModal', 'Maestros', 'todosResolve', 'Notification', 
-		function($scope, toDoFactory, $uibModal, Maestros, todosResolve, Notification) {
+	.controller('TodosCtrl', ['$scope', 'toDoFactory', '$uibModal', 'Maestros', 'todosResolve', 'Notification', 'moment',
+		function($scope, toDoFactory, $uibModal, Maestros, todosResolve, Notification, moment) {
 
 			$scope.loading = false;
 
@@ -29,6 +36,10 @@ angular.module('toDoApp')
 				$scope.showFilter = false;
 				$scope.todoList = todosResolve.data;
 				$scope.todoFilter = {};
+				$scope.todoFilter.daterange = {
+					startDate: null,
+					endDate: null
+				};
 			}
 
 			function openModal(todo) {
@@ -50,12 +61,19 @@ angular.module('toDoApp')
 						if (angular.isUndefined(todo._id) || todo._id === null) {
 							$scope.todoList.push(response.data.client);
 						} else {
-							var index = $scope.todoList.findIndex( a => a._id === todo._id );
+							var index = $scope.todoList.findIndex(a => a._id === todo._id);
 							$scope.todoList[index] = todo;
 						}
 
 						$scope.loading = false;
-						Notification.info({message: 'To Do updated'});
+						Notification.info({
+							message: 'To Do saved.'
+						});
+					}, function() {
+						Notification.warning({
+							message: 'To Do could not be saved.'
+						});
+						$scope.loading = false;
 					});
 				});
 			}
@@ -75,14 +93,22 @@ angular.module('toDoApp')
 			$scope.remove = function(_id) {
 				$scope.loading = true;
 				toDoFactory.remove(_id).then(function() {
-					var index = $scope.todoList.findIndex( a => a._id === _id );
+					var index = $scope.todoList.findIndex(a => a._id === _id);
 					$scope.todoList.splice(index, 1);
+					$scope.loading = false;
+					Notification.info({
+						message: 'To Do deleted.'
+					});
+				}, function() {
+					Notification.warning({
+						message: 'To Do could not be deleted.'
+					});
 					$scope.loading = false;
 				});
 			};
 
 			$scope.filtroController = function(todo) {
-				return filterFunction(todo, $scope.todoFilter);
+				return filterFunction(todo, $scope.todoFilter, moment);
 			};
 
 			init();
