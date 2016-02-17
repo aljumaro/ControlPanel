@@ -39,6 +39,7 @@ module.exports = function(config) {
       'bower_components/bootstrap-daterangepicker/daterangepicker.js',
       'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
       'bower_components/angular-moment/angular-moment.js',
+      'bower_components/nya-bootstrap-select/dist/js/nya-bs-select.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

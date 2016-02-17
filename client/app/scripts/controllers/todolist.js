@@ -1,19 +1,46 @@
 'use strict';
 
+function checkMultiple(prop, filter) {
+
+	var undCond = filter === undefined;
+	var LengCond = filter !== undefined && filter.length === 0;
+	var someCond = filter !== undefined && filter.some((a) => {
+		console.log('tested: ', prop, ' testCode: ', a.code);
+		return a.code === prop;
+	});
+
+	return undCond || LengCond || someCond;
+}
+
+function checkString(prop, filter) {
+	return filter === undefined ||
+			prop.toUpperCase().indexOf(filter.toUpperCase()) > -1;
+}
+
 function filterFunction(todo, filter, moment) {
 	var baseDate = moment(todo.date);
 	var startDate = filter.daterange.startDate;
 	var endDate = filter.daterange.endDate;
+
 	return (
-		(filter.title === undefined ||
-			todo.title.toUpperCase().indexOf(filter.title.toUpperCase()) > -1) &&
-		(filter.url === undefined || filter.url === '' ||
-			(todo.url !== undefined && todo.url.toUpperCase().indexOf(filter.url.toUpperCase()) > -1)) &&
-		(filter.priority === undefined || filter.priority === null || todo.priority === filter.priority) &&
-		(filter.project === undefined || filter.project === null || todo.project === filter.project) &&
-		(filter.status === undefined || filter.status === null || todo.status === filter.status) &&
+		(checkString(todo.title, filter.title)) &&
+		(checkString(todo.url, filter.url)) &&
+		(checkMultiple(todo.priority, filter.priority)) &&
+		(checkMultiple(todo.project, filter.project)) &&
+		(checkMultiple(todo.status, filter.status)) &&
 		((startDate === null && endDate === null) || baseDate.isBetween(startDate, endDate))
 	);
+}
+
+function countFilter(filter) {
+	var count = 0;
+	count += (filter.title) ? 1 : 0;
+	count += (filter.url) ? 1 : 0;
+	count += (filter.priority) ? 1 : 0;
+	count += (filter.project) ? 1 : 0;
+	count += (filter.status) ? 1 : 0;
+	count += (filter.daterange.startDate) ? 1 : 0;
+	return count;
 }
 
 /**
@@ -35,11 +62,7 @@ angular.module('toDoApp')
 				$scope.projectList = Maestros.projects;
 				$scope.showFilter = false;
 				$scope.todoList = todosResolve.data;
-				$scope.todoFilter = {};
-				$scope.todoFilter.daterange = {
-					startDate: null,
-					endDate: null
-				};
+				$scope.resetFilter();
 			}
 
 			function openModal(todo) {
@@ -78,8 +101,23 @@ angular.module('toDoApp')
 				});
 			}
 
-			$scope.toggleFilter = function() {
-				$scope.showFilter = !$scope.showFilter;
+			$scope.resetFilter = function() {
+				$scope.todoFilter = {
+					daterange: {
+						startDate: null,
+						endDate: null
+					},
+					status: [{
+						code: 'OP',
+						description: 'Opened'
+					}, {
+						code: 'BL',
+						description: 'Blocked'
+					}, {
+						code: 'LA',
+						description: 'Late'
+					}]
+				};
 			};
 
 			$scope.add = function() {
@@ -108,6 +146,7 @@ angular.module('toDoApp')
 			};
 
 			$scope.filtroController = function(todo) {
+				$scope.filtersAplied = countFilter($scope.todoFilter);
 				return filterFunction(todo, $scope.todoFilter, moment);
 			};
 
