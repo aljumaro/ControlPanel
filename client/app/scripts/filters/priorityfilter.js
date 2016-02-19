@@ -9,15 +9,12 @@
  * Filter in the toDoApp.
  */
 angular.module('toDoApp')
-	.filter('priorityFilter', ['TODO_PRIORITY', function(todoPriority) {
+	.filter('priorityFilter', ['TODO_PRIORITY', '_', function(todoPriority, _) {
 		return function(input) {
 
-			for (var i = 0; i < todoPriority.length; i++) {
-				if (todoPriority[i].code === input) {
-					return todoPriority[i].description;
-				}
-			}
+			return _.find(todoPriority, function(priority){
+				return priority.code === input;
+			}).description;
 
-			return 'Unknown';
 		};
 	}]);

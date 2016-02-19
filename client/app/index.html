@@ -11,6 +11,8 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-notification/dist/angular-ui-notification.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -245,7 +247,9 @@
         <!-- Main content -->
         <section class="content">
 
-          <div ng-view=""></div>
+          <route-loading-indicator></route-loading-indicator>
+
+          <div ng-hide="isRouteLoading" ng-view=""></div>
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
@@ -346,6 +350,14 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-confirm-modal/angular-confirm.min.js"></script>
+    <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -362,8 +374,10 @@
         <script src="scripts/services/appconstants.js"></script>
         <script src="scripts/filters/statusfilter.js"></script>
         <script src="scripts/filters/priorityfilter.js"></script>
-        <script src="scripts/controllers/tododetail.js"></script>
+        <script src="scripts/filters/projectfilter.js"></script>
         <script src="scripts/controllers/todolist.js"></script>
+        <script src="scripts/services/maestros.js"></script>
+        <script src="scripts/directives/routeloadingindicator.js"></script>
         <!-- endbuild -->
 </body>
 </html>

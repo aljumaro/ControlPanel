@@ -1,5 +1,10 @@
 'use strict';
 
+var underscore = angular.module('underscore', []);
+underscore.factory('_', function() {
+  return window._; // assumes underscore has already been loaded on the page
+});
+
 /**
  * @ngdoc overview
  * @name toDoApp
@@ -15,9 +20,15 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'underscore',
+    'ui.bootstrap',
+    'angular-confirm',
+    'ui-notification',
+    'daterangepicker',
+    'angularMoment'
   ])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', 'NotificationProvider', function($routeProvider, NotificationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/dashboard.html',
@@ -27,17 +38,12 @@ angular
       .when('/todo', {
         templateUrl: 'views/todolist.html',
         controller: 'TodosCtrl',
-        controllerAs: 'todos'
-      })
-      .when('/todo/detail/:idTodo', {
-        templateUrl: 'views/tododetail.html',
-        controller: 'TodoDetailCtrl',
-        controllerAs: 'todo/detail'
-      })
-      .when('/todo/add', {
-        templateUrl: 'views/tododetail.html',
-        controller: 'TodoDetailCtrl',
-        controllerAs: 'todo/detail'
+        controllerAs: 'todos',
+        resolve: {
+          todosResolve: ['toDoFactory', function(toDoFactory){
+            return toDoFactory.find();
+          }]
+        }
       })
       .when('/deployments', {
         templateUrl: 'views/deployments.html',
@@ -62,4 +68,29 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
+    NotificationProvider.setOptions({
+            startTop: 20,
+            startRight: 20,
+            verticalSpacing: 20,
+            horizontalSpacing: 20,
+            positionY: 'bottom',
+            templateUrl : 'views/templates/notification.html',
+            delay: 30000
+        });
+
+   /* $httpProvider.interceptors.push(function($timeout) {
+      return {
+        "response": function(response) {
+          return $timeout(function() {
+            return response;
+          }, 2500);
+        }
+      };
+    });*/
+  }]).run(function($confirmModalDefaults){
+    $confirmModalDefaults.templateUrl = 'views/templates/confirm.html';
+    $confirmModalDefaults.title = 'Confirm action';
+    $confirmModalDefaults.ok = 'Continue';
+    $confirmModalDefaults.cancel = 'Cancel';
   });

@@ -11,20 +11,23 @@ angular.module('toDoApp').factory('toDoFactory', ['$http', function($http) {
 
   return {
     find: function() {
-      return $http.get('/api/todo');
+        return $http.get('/api/todo');
     },
 
-    add: function() {
-    	return $http.post('/api/todo', {
-			title: 'Titulo todo 1',
-			detail: 'Very very long detail Very very long detail Very very long detail',
-			url: 'http://www.google.es',
-			date: new Date(),
-			dateCompleted: new Date(),
-			priority: 'LO',
-			project: 'ARQFIS - web',
-			status: 'OP'
-		});
+    save: function(todo) {
+
+    	//Si el todo ya tiene id lo editamos con PUT
+    	if (todo._id) {
+			return $http.put('/api/todo/' + todo._id, todo);
+    	} 
+    	
+    	//Si no tiene id lo guardamos con post
+    	todo.date = new Date();
+    	return $http.post('/api/todo', todo);
+    },
+
+    remove: function(_id){
+        return $http.delete('api/todo/' + _id);
     }
   };
 }]);

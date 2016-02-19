@@ -33,4 +33,20 @@ angular.module('toDoApp')
 	}, {
 		code: 'AS',
 		description: 'ASAP'
+	}])
+	.constant('TODO_PROJECT', [{
+		code: 'GEN',
+		description: 'General'
+	}, {
+		code: 'ARQ',
+		description: 'ARQFIS-web'
+	}, {
+		code: 'ARQ1',
+		description: 'ARQFIS-ETL-RUJ'
+	}, {
+		code: 'ARQ2',
+		description: 'ARQFIS-ETL-EXPURGO'
+	}, {
+		code: 'ARQ3',
+		description: 'ARQFIS-ETL-MIGRACION'
 	}]);
