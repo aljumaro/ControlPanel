@@ -26,7 +26,8 @@ angular
     'angular-confirm',
     'ui-notification',
     'daterangepicker',
-    'angularMoment'
+    'angularMoment',
+    'nya.bootstrap.select'
   ])
   .config(['$routeProvider', 'NotificationProvider', function($routeProvider, NotificationProvider) {
     $routeProvider
@@ -75,8 +76,7 @@ angular
             verticalSpacing: 20,
             horizontalSpacing: 20,
             positionY: 'bottom',
-            templateUrl : 'views/templates/notification.html',
-            delay: 30000
+            templateUrl : 'views/templates/notification.html'
         });
 
    /* $httpProvider.interceptors.push(function($timeout) {
