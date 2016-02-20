@@ -9,7 +9,7 @@ function checkMultiple(prop, filter) {
 	});
 
 	return undCond || LengCond || someCond;
-}
+} 
 
 function checkString(prop, filter) {
 	return filter === undefined ||
@@ -79,9 +79,7 @@ angular.module('toDoApp')
 					controller: 'EditTodoCtrl',
 					scope: $scope,
 					resolve: {
-						todo: function() {
-							return angular.copy(todo);
-						}
+						todo: () => angular.copy(todo)
 					}
 				});
 
@@ -114,16 +112,7 @@ angular.module('toDoApp')
 						startDate: null,
 						endDate: null
 					},
-					status: [{
-						code: 'OP',
-						description: 'Opened'
-					}, {
-						code: 'BL',
-						description: 'Blocked'
-					}, {
-						code: 'LA',
-						description: 'Late'
-					}]
+					status: Maestros.status.filter((a) => a.filterDefault)
 				};
 			};
 

@@ -10,13 +10,16 @@
 angular.module('toDoApp')
 	.constant('TODO_STATUS', [{
 		code: 'OP',
-		description: 'Opened'
+		description: 'Opened',
+		filterDefault: true
 	}, {
 		code: 'BL',
-		description: 'Blocked'
+		description: 'Blocked',
+		filterDefault: true
 	}, {
 		code: 'LA',
-		description: 'Late'
+		description: 'Late',
+		filterDefault: true
 	}, {
 		code: 'FS',
 		description: 'Finished'
