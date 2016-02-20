@@ -5,7 +5,6 @@ function checkMultiple(prop, filter) {
 	var undCond = filter === undefined;
 	var LengCond = filter !== undefined && filter.length === 0;
 	var someCond = filter !== undefined && filter.some((a) => {
-		console.log('tested: ', prop, ' testCode: ', a.code);
 		return a.code === prop;
 	});
 
@@ -32,13 +31,21 @@ function filterFunction(todo, filter, moment) {
 	);
 }
 
+function countMultiple(filter) {
+	return (filter === undefined || filter.length === 0) ? 0 : 1;
+}
+
+function countString(filter) {
+	return (filter) ? 1 : 0;
+}
+
 function countFilter(filter) {
 	var count = 0;
-	count += (filter.title) ? 1 : 0;
-	count += (filter.url) ? 1 : 0;
-	count += (filter.priority) ? 1 : 0;
-	count += (filter.project) ? 1 : 0;
-	count += (filter.status) ? 1 : 0;
+	count += countString(filter.title);
+	count += countString(filter.url);
+	count += countMultiple(filter.priority);
+	count += countMultiple(filter.project);
+	count += countMultiple(filter.status);
 	count += (filter.daterange.startDate) ? 1 : 0;
 	return count;
 }
