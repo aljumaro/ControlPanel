@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name toDoApp.controller:EstimationCtrl
+ * @name toDoApp.controller:RegisterCtrl
  * @description
- * # EstimationCtrl
+ * # RegisterCtrl
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('EstimationCtrl', function () {
+  .controller('RegisterCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

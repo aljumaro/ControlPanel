@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name toDoApp.controller:ConfigurationCtrl
+ * @name toDoApp.controller:LockscreenCtrl
  * @description
- * # ConfigurationCtrl
+ * # LockscreenCtrl
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('ConfigurationCtrl', function () {
+  .controller('LockscreenCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

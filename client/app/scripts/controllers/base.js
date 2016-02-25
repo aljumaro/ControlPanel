@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name toDoApp.controller:CalendarCtrl
+ * @name toDoApp.controller:BaseCtrl
  * @description
- * # CalendarCtrl
+ * # BaseCtrl
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('CalendarCtrl', function () {
+  .controller('BaseCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name toDoApp.controller:DeploymentsCtrl
+ * @name toDoApp.controller:LoginCtrl
  * @description
- * # DeploymentsCtrl
+ * # LoginCtrl
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('DeploymentsCtrl', function () {
+  .controller('LoginCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

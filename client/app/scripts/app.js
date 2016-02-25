@@ -27,68 +27,76 @@ angular
     'ui-notification',
     'daterangepicker',
     'angularMoment',
-    'nya.bootstrap.select'
+    'nya.bootstrap.select',
+    'ui.router'
   ])
-  .config(['$routeProvider', 'NotificationProvider', function($routeProvider, NotificationProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/dashboard.html',
-        controller: 'DashboardCtrl',
-        controllerAs: 'dashboard'
+  .config(['$urlRouterProvider', '$stateProvider', 'NotificationProvider',
+      function($urlRouterProvider, $stateProvider, NotificationProvider) {
+    $stateProvider
+      .state('login', {
+        url: '/',
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl',
+        controllerAs: 'vm'
       })
-      .when('/todo', {
-        templateUrl: 'views/todolist.html',
+      .state('register', {
+        url: '/register',
+        templateUrl: 'views/register.html',
+        controller: 'RegisterCtrl',
+        controllerAs: 'vm'
+      })
+      .state('lockscreen', {
+        url: '/lockscreen',
+        templateUrl: 'views/lockscreen.html',
+        controller: 'LockscreenCtrl',
+        controllerAs: 'vm'
+      })
+      .state('base', {
+        abstract: true,
+        templateUrl: 'views/base.html',
+        controller: 'BaseCtrl',
+        controllerAs: 'basevm'
+      })
+      .state('base.todo', {
+        url: '/todo',
+        templateUrl: 'views/todo.html',
         controller: 'TodosCtrl',
-        controllerAs: 'todos',
+        controllerAs: 'vm',
         resolve: {
-          todosResolve: ['toDoFactory', function(toDoFactory){
+          todosResolve: ['toDoFactory', function(toDoFactory) {
             return toDoFactory.find();
           }]
         }
       })
-      .when('/deployments', {
-        templateUrl: 'views/deployments.html',
-        controller: 'DeploymentsCtrl',
-        controllerAs: 'deployments'
-      })
-      .when('/estimation', {
-        templateUrl: 'views/estimation.html',
-        controller: 'EstimationCtrl',
-        controllerAs: 'estimation'
-      })
-      .when('/calendar', {
-        templateUrl: 'views/calendar.html',
-        controller: 'CalendarCtrl',
-        controllerAs: 'calendar'
-      })
-      .when('/configuration', {
-        templateUrl: 'views/configuration.html',
-        controller: 'ConfigurationCtrl',
-        controllerAs: 'configuration'
-      })
-      .otherwise({
-        redirectTo: '/'
+      .state('base.dashboard', {
+        url: '/dashboard',
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardCtrl',
+        controllerAs: 'dashboard'
       });
 
-    NotificationProvider.setOptions({
-            startTop: 20,
-            startRight: 20,
-            verticalSpacing: 20,
-            horizontalSpacing: 20,
-            positionY: 'bottom',
-            templateUrl : 'views/templates/notification.html'
-        });
+    $urlRouterProvider.otherwise('/dashboard');
+     
 
-   /* $httpProvider.interceptors.push(function($timeout) {
-      return {
-        "response": function(response) {
-          return $timeout(function() {
-            return response;
-          }, 2500);
-        }
-      };
-    });*/
-  }]).run(function($confirmModalDefaults){
+    NotificationProvider.setOptions({
+      startTop: 20,
+      startRight: 20,
+      verticalSpacing: 20,
+      horizontalSpacing: 20,
+      positionY: 'bottom',
+      templateUrl: 'views/templates/notification.html'
+    });
+
+     /*$httpProvider.interceptors.push(function($timeout) {
+       return {
+         'response': function(response) {
+           return $timeout(function() {
+             return response;
+           }, 1000);
+         }
+       };
+     });*/
+  }]).run(function($confirmModalDefaults) {
     $confirmModalDefaults.templateUrl = 'views/templates/confirm.html';
     $confirmModalDefaults.title = 'Confirm action';
     $confirmModalDefaults.ok = 'Continue';
