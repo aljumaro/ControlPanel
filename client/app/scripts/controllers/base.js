@@ -8,10 +8,15 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('BaseCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('BaseCtrl', ['AuthService', '$state', function(AuthService, $state) {
+        var vm = this;
+
+        vm.logout = function() {
+            AuthService.logout()
+                .then(function() {
+                    $state.go('login');
+                });
+        };
+
+        vm.user = AuthService.getUser();
+    }]);

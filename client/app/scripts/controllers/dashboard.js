@@ -8,10 +8,7 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('DashboardCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('DashboardCtrl', ['$scope', function($scope) {
+    	$scope.$parent.basevm.title = 'Dashboard';
+    	$scope.$parent.basevm.activeElement = 'DB';
+    }]);

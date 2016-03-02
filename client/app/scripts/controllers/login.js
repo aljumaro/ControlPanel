@@ -8,10 +8,21 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('LoginCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+	.controller('LoginCtrl',['$state', 'AuthService', 'Notification', function($state, AuthService, Notification) {
+		var vm = this;
+		vm.lf = {};
+
+		vm.login = function(){
+
+			AuthService.login(vm.lf.username, vm.lf.password)
+				.then(function() {
+					$state.go('base.dashboard');
+					vm.lf = {};
+				}, function() {
+					Notification.error({
+						message: 'Invalid username/password'
+					});
+				});
+		};
+
+	}]);

@@ -1,110 +1,100 @@
 <div class="wrapper cpAdminlteActivate">
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>C</b>P</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Control</b> Panel</span>
-    </a>
-
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <!-- User Account Menu -->
-          <li class="dropdown user user-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <img src="images/user.png" class="user-image" alt="User Image">
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Juanma Álvarez</span>
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="index2.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>C</b>P</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Control</b> Panel</span>
+        </a>
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
             </a>
-            <ul class="dropdown-menu">
-              <!-- The user image in the menu -->
-              <li class="user-header">
-                <img src="images/user.png" class="img-circle" alt="User Image">
-                <p>
-                  Juanma Álvarez - Web Developer
-                </p>
-              </li>
-              
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button 
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!-- The user image in the navbar-->
+                            <img src="images/default_user.png" class="user-image" alt="User Image">
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                            <span class="hidden-xs">{{basevm.user.username}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- The user image in the menu -->
+                            <li class="user-header">
+                                <img src="images/default_user.png" class="img-circle" alt="User Image">
+                                <p>
+                                    {{basevm.user.email}}
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat" ng-click="basevm.logout()">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button 
           <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
           </li>-->
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu">
-        <!--<li class="header">HEADER</li>-->
-        
-        <li><a ui-sref="base.dashboard"><i class="fa fa-cloud-upload"></i> <span>Dashboard</span></a></li>
-        <li><a ui-sref="base.todo"><i class="fa fa-tasks"></i> <span>To Dos</span></a></li>
-        <li><a href="#/deployments"><i class="fa fa-cloud-upload"></i> <span>Deployments</span></a></li>
-        <li><a href="#/estimation"><i class="fa fa-clock-o"></i> <span>Estimation</span></a></li>
-        <li><a href="#/calendar"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
-        <li class="active"><a href="#/configuration"><i class="fa fa-cog text-aqua"></i> <span>Configuration</span></a></li>
-        
-      </ul><!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section ng-hide="isRouteLoading" class="content-header">
-      <h1>
-        Page Header
-        <small>Optional description</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <route-loading-indicator></route-loading-indicator>
-      <div ng-hide="isRouteLoading" ui-view></div>
-
-    </section><!-- /.content -->
-  </div><!-- /.content-wrapper -->
-
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-      Organize yourself!
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu">
+                <!--<li class="header">HEADER</li>-->
+                <li ng-class="{'active': basevm.activeElement == 'DB'}"><a ui-sref="base.dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                <li ng-class="{'active': basevm.activeElement == 'TD'}"><a ui-sref="base.todo"><i class="fa fa-tasks"></i> <span>To Dos</span></a></li>
+                <li><a href="#/deployments"><i class="fa fa-cloud-upload"></i> <span>Deployments</span></a></li>
+                <li><a href="#/estimation"><i class="fa fa-clock-o"></i> <span>Estimation</span></a></li>
+                <li><a href="#/calendar"><i class="fa fa-calendar"></i> <span>Calendar</span></a></li>
+                <li><a href="#/configuration"><i class="fa fa-cog text-aqua"></i> <span>Configuration</span></a></li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section ng-hide="isRouteLoading" class="content-header">
+            <h1> {{basevm.title}} <small>{{basevm.description}}</small> </h1>
+            <!--<ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>-->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <route-loading-indicator></route-loading-indicator>
+            <div ng-hide="isRouteLoading" ui-view></div>
+        </section>
+        <!-- /.content -->
     </div>
-    <!-- Default to the left -->
-    <strong>By: <a href="mailto:aljumaro@gmail.com">@ljumaro</a></strong> <i class="fa fa-heart"></i>
-  </footer>
-
-</div><!-- ./wrapper -->
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            Organize yourself!
+        </div>
+        <!-- Default to the left -->
+        <strong>By: <a href="mailto:aljumaro@gmail.com">@ljumaro</a></strong> <i class="fa fa-heart"></i>
+    </footer>
+</div>
+<!-- ./wrapper -->

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="styles/skins/skin-yellow.css">
+    <link rel="stylesheet" href="styles/vendor/orange.css">
     <!-- endbuild -->
   </head>
   <body ng-app="toDoApp" class="hold-transition skin-yellow sidebar-mini login-page">
@@ -66,6 +67,7 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/vendor/AdminLTE.js"></script>
+        <script src="scripts/vendor/icheck.js"></script>
         <script src="scripts/app.js"></script>
         
         <script src="scripts/controllers/dashboard.js"></script>
@@ -82,8 +84,8 @@
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/lockscreen.js"></script>
         <script src="scripts/controllers/register.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/index.js"></script>
+        <script src="scripts/directives/cp-i-check.js"></script>
+        <script src="scripts/services/authservice.js"></script>
         <!-- endbuild -->
 </body>
 </html>
