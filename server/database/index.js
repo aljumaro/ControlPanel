@@ -4,9 +4,8 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var TodoModel = require('./schemas/todo');
 var AccountModel = require('./schemas/account');
-var config = require('./../config/configuration.js');
 
-var dbUrl = config.db.url;
+var dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl);
 

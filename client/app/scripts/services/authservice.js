@@ -8,89 +8,91 @@
  * Service in the toDoApp.
  */
 angular.module('toDoApp')
-	.service('AuthService', ['$http', '$q', function($http, $q) {
-		var apiUrl = '/api/account';
-		var user;
-		var email;
+    .service('AuthService', ['$http', '$q', '$window', function($http, $q, $window) {
+        var apiUrl = '/api/account';
 
-		function isLoggedIn() {
-			var deferred = $q.defer();
-			$http.get(apiUrl + '/status')
-				.then(function(response) {
-					user = response.data.logged;
-					deferred.resolve(user);
-				}, function() {
-					user = false;
-					deferred.resolve(user);
-				});
-			return deferred.promise;
-		}
+        function isLoggedIn() {
+            var deferred = $q.defer();
+            $http.get(apiUrl + '/status')
+                .then(function() {
+                    deferred.resolve(true);
+                }, function() {
+                    deferred.resolve(false);
+                });
+            return deferred.promise;
+        }
 
-		function getUser() {
-			return user;
-		}
+        function getUser() {
+        	console.log($window.sessionStorage.getItem('user'));
+            return JSON.parse($window.sessionStorage.getItem('user'));
+        }
 
-		function login(username, password) {
+        function setUser(user) {
+        	$window.sessionStorage.setItem('user', JSON.stringify(user));
+        }
 
-			email = username;
+        function removeUser() {
+        	$window.sessionStorage.removeItem('user');
+        }
 
-			var deferred = $q.defer();
+        function login(username, password) {
 
-			$http.post(apiUrl + '/login', {
-					username: username,
-					password: password
-				})
-				.success(function(data) {
-					user = data.user;
-					deferred.resolve();
-				})
-				.error(function() {
-					user = {};
-					deferred.reject();
-				});
+            var deferred = $q.defer();
 
-			return deferred.promise;
-		}
+            $http.post(apiUrl + '/login', {
+                    username: username,
+                    password: password
+                })
+                .success(function(response) {
+                	setUser(response.user);
+                    deferred.resolve();
+                })
+                .error(function() {
+                    deferred.reject();
+                });
 
-		function logout() {
-			var deferred = $q.defer();
+            return deferred.promise;
+        }
 
-			$http.get(apiUrl + '/logout')
-				.success(function() {
-					user = {};
-					deferred.resolve();
-				})
-				.error(function() {
-					user = {};
-					deferred.reject();
-				});
+        function logout() {
+            var deferred = $q.defer();
 
-			return deferred.promise;
-		}
+            $http.get(apiUrl + '/logout')
+                .success(function() {
+                    removeUser();
+                    deferred.resolve();
+                })
+                .error(function() {
+                    removeUser();
+                    deferred.reject();
+                });
 
-		function register(user) {
-			var deferred = $q.defer();
+            return deferred.promise;
+        }
 
-			$http.post(apiUrl + '/register', user)
-				.success(function(data, status) {
-					if (status === 200) {
-						deferred.resolve();
-					} else {
-						deferred.reject();
-					}
-				})
-				.error(function() {
-					deferred.reject();
-				});
+        function register(user) {
+            var deferred = $q.defer();
 
-			return deferred.promise;
-		}
+            $http.post(apiUrl + '/register', user)
+                .success(function(data, status) {
+                    if (status === 200) {
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                    }
+                })
+                .error(function() {
+                    deferred.reject();
+                });
 
-		return ({
-			isLoggedIn: isLoggedIn,
-			getUser: getUser,
-			login: login,
-			logout: logout,
-			register: register
-		});
-	}]);
+            return deferred.promise;
+        }
+
+        return ({
+            isLoggedIn: isLoggedIn,
+            getUser: getUser,
+            login: login,
+            logout: logout,
+            register: register
+        });
+    }]);

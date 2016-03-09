@@ -61,6 +61,13 @@ angular
           controllerAs: 'basevm',
           authenticate: true
         })
+        .state('base.profile', {
+          url: '/profile',
+          templateUrl: 'views/profile.html',
+          controller: 'ProfileCtrl',
+          controllerAs: 'vm',
+          authenticate: true
+        })
         .state('base.todo', {
           url: '/todo',
           templateUrl: 'views/todo.html',

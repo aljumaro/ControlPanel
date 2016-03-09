@@ -23,19 +23,22 @@
                             <!-- The user image in the navbar-->
                             <img src="images/default_user.png" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{basevm.user.username}}</span>
+                            <span class="hidden-xs" ng-show="basevm.user.profile.lastname && basevm.user.profile.firstname">{{basevm.user.profile.lastname}}, {{basevm.user.profile.firstname}}</span>
+                            <span class="hidden-xs" ng-show="basevm.user.profile.firstname">{{basevm.user.profile.firstname}}</span>
+                            <span class="hidden-xs" ng-hide="basevm.user.profile.firstname">Complete your profile</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
                                 <img src="images/default_user.png" class="img-circle" alt="User Image">
                                 <p>
-                                    {{basevm.user.email}}
+                                    {{basevm.user.email}} <span ng-show>- {{basevm.user.profile.position}}</span>
+                                    <small ng-show="basevm.user.profile.since">Member since {{basevm.user.profile.since | date: 'MMMM, y'}}</small>
                                 </p>
                             </li>
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a ui-sref="base.profile" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="#" class="btn btn-default btn-flat" ng-click="basevm.logout()">Sign out</a>
