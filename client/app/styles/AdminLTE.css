@@ -3284,6 +3284,13 @@ table.text-center th {
   width: 100px;
   padding: 3px;
   border: 3px solid #d2d6de;
+  display: block;
+  z-index: 1;
+}
+.profile-user-img:hover {
+  cursor: pointer;
+  opacity:1;
+  background:rgba(0,0,0,0.5) center no-repeat;
 }
 .profile-username {
   font-size: 21px;

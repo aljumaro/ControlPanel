@@ -23,16 +23,15 @@ angular.module('toDoApp')
         }
 
         function getUser() {
-        	console.log($window.sessionStorage.getItem('user'));
             return JSON.parse($window.sessionStorage.getItem('user'));
         }
 
         function setUser(user) {
-        	$window.sessionStorage.setItem('user', JSON.stringify(user));
+            $window.sessionStorage.setItem('user', JSON.stringify(user));
         }
 
         function removeUser() {
-        	$window.sessionStorage.removeItem('user');
+            $window.sessionStorage.removeItem('user');
         }
 
         function login(username, password) {
@@ -44,7 +43,7 @@ angular.module('toDoApp')
                     password: password
                 })
                 .success(function(response) {
-                	setUser(response.user);
+                    setUser(response.user);
                     deferred.resolve();
                 })
                 .error(function() {
@@ -88,11 +87,27 @@ angular.module('toDoApp')
             return deferred.promise;
         }
 
+        function updateProfile(user) {
+            var deferred = $q.defer();
+
+            $http.put(apiUrl + '/profile/' + user._id, user.profile)
+                .success(function(data) {
+                    deferred.resolve(data);
+                    setUser(user);
+                })
+                .error(function(err) {
+                    deferred.reject(err);
+                });
+
+            return deferred.promise;
+        }
+
         return ({
             isLoggedIn: isLoggedIn,
             getUser: getUser,
             login: login,
             logout: logout,
-            register: register
+            register: register,
+            updateProfile: updateProfile
         });
     }]);

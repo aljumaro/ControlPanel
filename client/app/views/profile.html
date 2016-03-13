@@ -3,15 +3,16 @@
         <!-- Profile Image -->
         <div class="box box-success">
             <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="images/default_user.png" alt="User profile picture">
-                <h3 class="profile-username text-center" ng-show="basevm.user.username">{{vm.user.username}}</h3>
-                <h3 class="profile-username text-center" ng-hide="basevm.user.username">Please, set your name</h3>
-                <p class="text-muted text-center">{{vm.user.position}}</p>
+                <img class="profile-user-img img-responsive img-circle" ng-src="{{basevm.picUrl}}" alt="User profile picture" err-src="images/default_user.png" ngf-select="upload($file)">
+                <h3 class="profile-username text-center" ng-show="basevm.user.profile.firstname">{{basevm.user.profile.firstname}} {{basevm.user.profile.lastname}}</h3>
+                <h3 class="profile-username text-center" ng-hide="basevm.user.profile.firstname">Please, set your name</h3>
+                <p class="text-muted text-center">{{basevm.user.profile.position}}</p>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Member since</b> <span class="pull-right">{{vm.user.profile.since | date: 'MMMM, y'}}</span>
+                        <b>Member since</b> <span class="pull-right">{{basevm.user.profile.since | date: 'MMMM, y'}}</span>
                     </li>
                 </ul>
+                <a href="#" class="btn btn-warning btn-block"><b>Change password</b></a>
                 <a href="#" class="btn btn-danger btn-block"><b>Delete account</b></a>
             </div>
             <!-- /.box-body -->

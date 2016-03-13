@@ -10,8 +10,8 @@ var Account = new Schema({
         position: { type: String },
         since: {type: Date},
         pic: {
-            mime: { type: String },
-            content: { type: Buffer }
+            contentType: { type: String, select: false },
+            content: { type: Buffer, select: false }
         }
     }
 });

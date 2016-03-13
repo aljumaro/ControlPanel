@@ -19,4 +19,7 @@ angular.module('toDoApp')
         };
 
         vm.user = AuthService.getUser();
+
+        vm.picUrl = '/api/account/profile/pic/' + vm.user._id;
+
     }]);

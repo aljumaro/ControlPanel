@@ -28,7 +28,8 @@ angular
     'daterangepicker',
     'angularMoment',
     'nya.bootstrap.select',
-    'ui.router'
+    'ui.router',
+    'ngFileUpload'
   ])
   .config(['$urlRouterProvider', '$stateProvider', 'NotificationProvider',
     function($urlRouterProvider, $stateProvider, NotificationProvider) {
