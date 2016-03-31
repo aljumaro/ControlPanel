@@ -80,7 +80,7 @@ router.delete('/:todo_id', function(req, res) {
 	var cleanId = sanitize(req.params.todo_id);
 
 	Todo.remove({
-		_id: req.params.todo_id
+		_id: cleanId
 	}, function(err, todo){
 		if (err) {
 			res.status(500).json({

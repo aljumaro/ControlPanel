@@ -1,12 +1,12 @@
 <div class="ui-notification">
-	<div class="alert alert-info alert-dismissable" ng-if="t === 'i'">
+	<div class="alert alert-success alert-dismissable" ng-if="t === 's'">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		<h4><i class="icon fa fa-info"></i> Info</h4>
+		<h4><i class="icon fa fa-check"></i> Success</h4>
 		{{message}}
 	</div>
-	<div class="alert alert-warning alert-dismissable" ng-if="t === 'w'">
+	<div class="alert alert-error alert-dismissable" ng-if="t === 'e'">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		<h4><i class="icon fa fa-warning"></i> Info</h4>
+		<h4><i class="icon fa fa-exclamation"></i> Error</h4>
 		{{message}}
 	</div>
 </div>

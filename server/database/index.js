@@ -1,7 +1,11 @@
 var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 var TodoModel = require('./schemas/todo');
-var config = require('./../config/configuration.js');
-var dbUrl = config.db.url;
+var AccountModel = require('./schemas/account');
+
+var dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl);
 
@@ -15,4 +19,9 @@ db.once('open', function callback () {
   console.log('Database Connection Successfully Opened at ' + dbUrl);
 });
 
+passport.use(new LocalStrategy(AccountModel.authenticate()));
+passport.serializeUser(AccountModel.serializeUser());
+passport.deserializeUser(AccountModel.deserializeUser());
+
 exports.Todo = TodoModel;
+exports.Account = AccountModel;

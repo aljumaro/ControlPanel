@@ -61,6 +61,13 @@ angular.module('toDoApp')
 	.controller('TodosCtrl', ['$scope', 'toDoFactory', '$uibModal', 'Maestros', 'todosResolve', 'Notification', 'moment',
 		function($scope, toDoFactory, $uibModal, Maestros, todosResolve, Notification, moment) {
 
+			$scope.$parent.basevm.title = 'To Dos';
+    		$scope.$parent.basevm.activeElement = 'TD';
+
+			$scope.test = function(){
+				toDoFactory.test();
+			};
+
 			$scope.loading = false;
 
 			function init() {
@@ -94,11 +101,11 @@ angular.module('toDoApp')
 						}
 
 						$scope.loading = false;
-						Notification.info({
+						Notification.success({
 							message: 'To Do saved.'
 						});
 					}, function() {
-						Notification.warning({
+						Notification.error({
 							message: 'To Do could not be saved.'
 						});
 						$scope.loading = false;
@@ -130,11 +137,11 @@ angular.module('toDoApp')
 					var index = $scope.todoList.findIndex(a => a._id === _id);
 					$scope.todoList.splice(index, 1);
 					$scope.loading = false;
-					Notification.info({
+					Notification.success({
 						message: 'To Do deleted.'
 					});
 				}, function() {
-					Notification.warning({
+					Notification.error({
 						message: 'To Do could not be deleted.'
 					});
 					$scope.loading = false;
